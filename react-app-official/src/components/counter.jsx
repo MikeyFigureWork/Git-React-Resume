@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class Counter extends Component {
   state = {
-    count: 1,
+    count: this.props.value,
     imageUrl: "https://picsum.photos/200",
     tags: [],
   };
@@ -56,8 +56,11 @@ class Counter extends Component {
   };
 
   render() {
+    console.log("props", this.props);
     return (
       <div>
+        {/* {this.props.children} */}
+        <h4>Counter #{this.props.id}</h4>
         {
           " " /*I Wonder Why Prettier Automatically Puts Braces in the Return? Is It Cause a New Standard Format to Encapulate the Return Elements in Braces?*/
         }
