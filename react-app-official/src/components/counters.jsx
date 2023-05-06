@@ -11,6 +11,18 @@ class Counters extends Component {
     ],
   };
 
+  handleIncrement = (counter) => {
+    //console.log(counter);
+    //...'triple dot' Clones the Data. A 'Copy'.
+    const counters = [...this.state.counters]; //First Make a Local 'counters' 'Copy Array' for the Function to Update in 'setState(counters = counters)' or 'setState(counters)'
+    const index = counters.indexOf(counter); //Grab The Appropriate Index from the 'counter' Component Parameter (IDK How, but counter knows it's index when referenced to an array?)
+    counters[index] = { ...counter }; //Make the Index of the 'counters' Local Array a 'Copy' of the 'counter' Component. (This is Possible?)
+    counters[index].value++; //Increment That Value (Makes Sense...)
+    this.setState({ counters }); //Update State with a 'counters' Array of Updated "values" (Okay...)
+    //Does the 'const' for 'counters' & 'index' make the values not only 'Local' to the Function, but Restrict their 'Data Type'? (Maybe My Mind is Restricted on Data Types and Stuff)
+    //Also Reminder, "setState" Calls Render Again. So We Update the Array in 'State' and We Re-Render the Data from 'State' as Specified by React when Called.
+  };
+
   handleReset = () => {
     const counters = this.state.counters.map((c) => {
       c.value = 0;
@@ -21,9 +33,8 @@ class Counters extends Component {
 
   handleDelete = (counterId) => {
     console.log("Event Handler Called, Delete", counterId);
-    const counters = this.state.counters.filter((c) => c.id !== counterId); //Set "counters" to a new array. The new array is "counters" modified with 1 less counter, it is of matching id.
-    //this.setState({counters: counters});                                //The syntax I guess knows by what each value is? idk. But letting 'React' know there are changes to counters.
-    this.setState({ counters }); //Since the 'key' and 'value' are the same in the line above, it can be simplified to this.
+    const counters = this.state.counters.filter((c) => c.id !== counterId);
+    this.setState({ counters });
   };
 
   render() {
@@ -36,10 +47,9 @@ class Counters extends Component {
           <Counter
             key={counter.id}
             onDelete={this.handleDelete}
+            onIncrement={this.handleIncrement}
             counter={counter}
-          >
-            {/* <h4>Counter #{counter.id}</h4> */}
-          </Counter>
+          ></Counter>
         ))}
       </div>
     );
